@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.Prezime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DatumRodjenja)
+                @item.DatumRodjenja.Date.ToString("d")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
