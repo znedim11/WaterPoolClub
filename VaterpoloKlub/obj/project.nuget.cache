@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3dn/+W3UCPk8YJrcufkuFC2Bjpb0Ksk1teAqQMThJb+VxjFOkVYCImr0UCqZMr62r9Jcd2juz5/fwMh2PMnarA==",
+  "dgSpecHash": "Kw/f2pHlDk0PJIOf1h4XWanMtgfpdhHdZe/ylQDPRHWiWQokmF0vOcHeDLM45fAtKlS3J9aSysvbkGdSxJoFDg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Edin Purivatra\\Source\\Repos\\VaterpoloKlub\\VaterpoloKlub\\VaterpoloKlub.csproj",
+  "projectFilePath": "C:\\Users\\Edin Purivatra\\source\\repos\\webapp\\VaterpoloKlub\\VaterpoloKlub.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Edin Purivatra\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.6\\microsoft.aspnetcore.cryptography.internal.3.1.6.nupkg.sha512",
     "C:\\Users\\Edin Purivatra\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.6\\microsoft.aspnetcore.cryptography.keyderivation.3.1.6.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Edin Purivatra\\Source\\Repos\\VaterpoloKlub\\VaterpoloKlub\\VaterpoloKlub.csproj": {}
+    "C:\\Users\\Edin Purivatra\\source\\repos\\webapp\\VaterpoloKlub\\VaterpoloKlub.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Edin Purivatra\\Source\\Repos\\VaterpoloKlub\\VaterpoloKlub\\VaterpoloKlub.csproj": {
+    "C:\\Users\\Edin Purivatra\\source\\repos\\webapp\\VaterpoloKlub\\VaterpoloKlub.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Edin Purivatra\\Source\\Repos\\VaterpoloKlub\\VaterpoloKlub\\VaterpoloKlub.csproj",
+        "projectUniqueName": "C:\\Users\\Edin Purivatra\\source\\repos\\webapp\\VaterpoloKlub\\VaterpoloKlub.csproj",
         "projectName": "VaterpoloKlub",
-        "projectPath": "C:\\Users\\Edin Purivatra\\Source\\Repos\\VaterpoloKlub\\VaterpoloKlub\\VaterpoloKlub.csproj",
+        "projectPath": "C:\\Users\\Edin Purivatra\\source\\repos\\webapp\\VaterpoloKlub\\VaterpoloKlub.csproj",
         "packagesPath": "C:\\Users\\Edin Purivatra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Edin Purivatra\\Source\\Repos\\VaterpoloKlub\\VaterpoloKlub\\obj\\",
+        "outputPath": "C:\\Users\\Edin Purivatra\\source\\repos\\webapp\\VaterpoloKlub\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Edin Purivatra\\AppData\\Roaming\\NuGet\\NuGet.Config",
