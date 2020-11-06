@@ -8841,19 +8841,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\stefan.balaban\\.nuget\\packages\\": {}
+    "C:\\Users\\Edin Purivatra\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\stefan.balaban\\source\\repos\\VaterpoloKlub\\VaterpoloKlub\\VaterpoloKlub.csproj",
+      "projectUniqueName": "C:\\Users\\Edin Purivatra\\source\\repos\\webapp\\VaterpoloKlub\\VaterpoloKlub.csproj",
       "projectName": "VaterpoloKlub",
-      "projectPath": "C:\\Users\\stefan.balaban\\source\\repos\\VaterpoloKlub\\VaterpoloKlub\\VaterpoloKlub.csproj",
-      "packagesPath": "C:\\Users\\stefan.balaban\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\stefan.balaban\\source\\repos\\VaterpoloKlub\\VaterpoloKlub\\obj\\",
+      "projectPath": "C:\\Users\\Edin Purivatra\\source\\repos\\webapp\\VaterpoloKlub\\VaterpoloKlub.csproj",
+      "packagesPath": "C:\\Users\\Edin Purivatra\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Edin Purivatra\\source\\repos\\webapp\\VaterpoloKlub\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\stefan.balaban\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Edin Purivatra\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8922,7 +8922,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
