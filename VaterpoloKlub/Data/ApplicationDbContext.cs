@@ -14,5 +14,10 @@ namespace VaterpoloKlub.Data
             : base(options)
         {
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=.;Database=seminarskiRad;Trusted_Connection=True;");
+        }
+        public DbSet<Trener> Treneri { get; set; }
     }
 }
