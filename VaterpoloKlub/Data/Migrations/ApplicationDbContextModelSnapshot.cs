@@ -215,6 +215,39 @@ namespace VaterpoloKlub.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("VaterpoloKlub.Models.Clan", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Adresa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Datum")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Kontakt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mjesto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Prezime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Clanovi");
+                });
+
             modelBuilder.Entity("VaterpoloKlub.Models.Trener", b =>
                 {
                     b.Property<int>("Id")
@@ -236,7 +269,7 @@ namespace VaterpoloKlub.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Treneri");
+                    b.ToTable("Trener");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

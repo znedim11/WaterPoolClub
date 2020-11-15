@@ -10,7 +10,22 @@ namespace VaterpoloKlub.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<Clan> Clan { get; set; }
+        public DbSet<Clan> Clanovi { get; set; }
+        public DbSet<Trener> OrganizacijaZaCertifikacije { get; set; }
+        public DbSet<Trener> Certifikati{ get; set; }
+        public DbSet<Trener> PolaganjeCertifikata { get; set; }
+        public DbSet<Trener> Testiranja { get; set; }
+        public DbSet<Trener> PrisustvoNaTreninzima { get; set; }
+        public DbSet<Trener> Treninzi { get; set; }
+        public DbSet<Trener> Takmicenja { get; set; }
+        public DbSet<Trener> RezultatTakmicenja { get; set; }
+        public DbSet<Trener> Nagrade { get; set; }
+        public DbSet<Trener> Utakmice { get; set; }
+        public DbSet<Trener> ClanUEkipama { get; set; }
+        public DbSet<Trener> Ekipe { get; set; }
+        public DbSet<Trener> NaplataClanarina { get; set; }
+        public DbSet<Trener> Upravnici { get; set; }
+        public DbSet<Trener> Clanarine { get; set; }
         public DbSet<Trener> Treneri { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

@@ -18,4 +18,5 @@ namespace VaterpoloKlub.Models
             return $"{Ime} {Prezime}";
         }
     }
+
 }
