@@ -7,22 +7,20 @@ using VaterpoloKlub.Models;
 
 namespace VaterpoloKlub.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Clan> Clan { get; set; }
+        public DbSet<Trener> Treneri { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            optionsBuilder.UseSqlServer(@" Server=DESKTOP-P6SG32L\MSSQLSERVERR;
-                                        Database=Sprint1;
-                                        Trusted_Connection=true;
-                                        MultipleActiveResultSets=true; ");
-
+            optionsBuilder.UseSqlServer(@"Server=.;Database=seminarskiRad;Trusted_Connection=True;");
         }
-        public DbSet<Clan> Clan { get; set; }
-
+        
     }
 }
