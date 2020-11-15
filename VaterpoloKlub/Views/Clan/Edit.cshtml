@@ -1,0 +1,45 @@
+@using VaterpoloKlub.Models
+
+@{
+
+    var cl = (Clan)ViewData["clanEdit"];
+
+
+}
+<form action="/Clan/Save">
+    <div style="display: none">
+        <label>Clan ID</label>
+        <input name="clanID" readonly value="@cl.ID"  />
+    </div>
+    <div>
+        <label>Ime</label>
+        <input name="Ime" value="@cl.Ime" required oninvalid="this.setCustomValidity('Unesite Ime')" oninput="setCustomValidity('')" />
+    </div>
+    <div>
+        <label>Prezime</label>
+        <input name="Prezime" value="@cl.Prezime" required oninvalid="this.setCustomValidity('Unesite Prezime')" oninput="setCustomValidity('')"/>
+    </div>
+
+    <div>
+        <label>Adresa</label>
+        <input name="Adresa" value="@cl.Adresa" />
+    </div>
+    <div>
+        <label>Mjesto</label>
+        <input name="Mjesto" value="@cl.Mjesto" />
+    </div>
+    <div>
+        <label>Kontakt</label>
+        <input name="Kontakt" value="@cl.Kontakt" />
+    </div>
+    <div>
+        <label>Email</label>
+        <input name="Email" value="@cl.Email" required oninvalid="this.setCustomValidity('Unesite Email')" oninput="setCustomValidity('')"/>
+    </div>
+
+
+
+
+    <input type="submit" value="Save" />
+
+</form>

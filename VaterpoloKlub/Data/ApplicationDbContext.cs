@@ -10,6 +10,9 @@ namespace VaterpoloKlub.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Clan> Clan { get; set; }
+        public DbSet<Trener> Treneri { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -18,6 +21,6 @@ namespace VaterpoloKlub.Data
         {
             optionsBuilder.UseSqlServer(@"Server=.;Database=seminarskiRad;Trusted_Connection=True;");
         }
-        public DbSet<Trener> Treneri { get; set; }
+        
     }
 }

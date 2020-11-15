@@ -1,0 +1,58 @@
+﻿@using VaterpoloKlub.Models
+
+@{
+    ViewData["Title"] = "Prikaz";
+    var clan = (List<Clan>)ViewData["clanovi"];
+
+    var q = ViewData["q"];
+}
+
+<h1>Evidencija Clanova</h1>
+
+<form>
+    <input name="q" value="@q" />
+    <input type="submit" value="Trazi" onclick="window.location='/Clan/View'" />
+</form>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Adresa</th>
+            <th>Mjesto</th>
+            <th>Datum</th>
+            <th>Kontakt</th>
+            <th>Email</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (Clan s in clan)
+        {
+        <tr>
+            <td>@s.Ime</td>
+            <td>@s.Prezime</td>
+            <td>@s.Adresa</td>
+            <td>@s.Mjesto</td>
+            <td>@s.Datum</td>
+            <td>@s.Kontakt </td>
+            <td>@s.Email </td>
+            <td> 
+            <a href="/Clan/Edit?ClanID=@s.ID">Uredi</a>
+            <a href="/Clan/Delete?ClanID=@s.ID">Obrisi</a>
+            </td>
+        </tr>
+        }
+
+
+    </tbody>
+
+
+</table>
+
+
+<button type="button" class="btn btn-primary" onclick="window.location='/Clan/Add'">Novi clan</button>
+
