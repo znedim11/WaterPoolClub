@@ -36,6 +36,5 @@ namespace VaterpoloKlub.Data
         {
             optionsBuilder.UseSqlServer(@"Server=.;Database=seminarskiRad;Trusted_Connection=True;");
         }
-        
     }
 }

@@ -17,5 +17,7 @@ namespace VaterpoloKlub.Models
         public string Kontakt { get; set; }
         public string Email { get; set; }
         public int ID { get; set; }
+        public List<PrisustvoNaTreningu> PrisustvoNaTreningu { get; set; }
+
     }
 }
