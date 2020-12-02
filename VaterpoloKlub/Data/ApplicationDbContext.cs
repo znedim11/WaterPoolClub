@@ -36,5 +36,19 @@ namespace VaterpoloKlub.Data
         {
             optionsBuilder.UseSqlServer(@"Server=.;Database=seminarskiRad;Trusted_Connection=True;");
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<PrisustvoNaTreningu>()
+                   .HasKey(bc => new { bc.TreningId, bc.ClanId });
+            builder.Entity<PrisustvoNaTreningu>()
+                .HasOne(bc => bc.Clan)
+                .WithMany(b => b.PrisustvoNaTreningu)
+                .HasForeignKey(bc => bc.ClanId);
+            builder.Entity<PrisustvoNaTreningu>()
+                .HasOne(bc => bc.Trening)
+                .WithMany(c => c.PrisustvoNaTreningu)
+                .HasForeignKey(bc => bc.TreningId);
+            base.OnModelCreating(builder);
+        }
     }
 }

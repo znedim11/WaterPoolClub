@@ -10,23 +10,23 @@ using VaterpoloKlub.Models;
 
 namespace VaterpoloKlub.Controllers
 {
-    public class PrisustvoNaTreningusController : Controller
+    public class PrisustvoNaTreninguController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PrisustvoNaTreningusController(ApplicationDbContext context)
+        public PrisustvoNaTreninguController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: PrisustvoNaTreningus
+        // GET: PrisustvoNaTreningu
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.PrisustvoNaTreninzima.Include(p => p.Clan).Include(p => p.Trening);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: PrisustvoNaTreningus/Details/5
+        // GET: PrisustvoNaTreningu/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,7 +37,7 @@ namespace VaterpoloKlub.Controllers
             var prisustvoNaTreningu = await _context.PrisustvoNaTreninzima
                 .Include(p => p.Clan)
                 .Include(p => p.Trening)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.TreningId == id);
             if (prisustvoNaTreningu == null)
             {
                 return NotFound();
@@ -46,7 +46,7 @@ namespace VaterpoloKlub.Controllers
             return View(prisustvoNaTreningu);
         }
 
-        // GET: PrisustvoNaTreningus/Create
+        // GET: PrisustvoNaTreningu/Create
         public IActionResult Create()
         {
             ViewData["ClanId"] = new SelectList(_context.Clanovi, "ID", "ID");
@@ -54,12 +54,12 @@ namespace VaterpoloKlub.Controllers
             return View();
         }
 
-        // POST: PrisustvoNaTreningus/Create
+        // POST: PrisustvoNaTreningu/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TreningId,ClanId")] PrisustvoNaTreningu prisustvoNaTreningu)
+        public async Task<IActionResult> Create([Bind("TreningId,ClanId")] PrisustvoNaTreningu prisustvoNaTreningu)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace VaterpoloKlub.Controllers
             return View(prisustvoNaTreningu);
         }
 
-        // GET: PrisustvoNaTreningus/Edit/5
+        // GET: PrisustvoNaTreningu/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,14 +90,14 @@ namespace VaterpoloKlub.Controllers
             return View(prisustvoNaTreningu);
         }
 
-        // POST: PrisustvoNaTreningus/Edit/5
+        // POST: PrisustvoNaTreningu/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,TreningId,ClanId")] PrisustvoNaTreningu prisustvoNaTreningu)
+        public async Task<IActionResult> Edit(int id, [Bind("TreningId,ClanId")] PrisustvoNaTreningu prisustvoNaTreningu)
         {
-            if (id != prisustvoNaTreningu.Id)
+            if (id != prisustvoNaTreningu.TreningId)
             {
                 return NotFound();
             }
@@ -111,7 +111,7 @@ namespace VaterpoloKlub.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PrisustvoNaTreninguExists(prisustvoNaTreningu.Id))
+                    if (!PrisustvoNaTreninguExists(prisustvoNaTreningu.TreningId))
                     {
                         return NotFound();
                     }
@@ -127,7 +127,7 @@ namespace VaterpoloKlub.Controllers
             return View(prisustvoNaTreningu);
         }
 
-        // GET: PrisustvoNaTreningus/Delete/5
+        // GET: PrisustvoNaTreningu/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,7 +138,7 @@ namespace VaterpoloKlub.Controllers
             var prisustvoNaTreningu = await _context.PrisustvoNaTreninzima
                 .Include(p => p.Clan)
                 .Include(p => p.Trening)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.TreningId == id);
             if (prisustvoNaTreningu == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace VaterpoloKlub.Controllers
             return View(prisustvoNaTreningu);
         }
 
-        // POST: PrisustvoNaTreningus/Delete/5
+        // POST: PrisustvoNaTreningu/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -160,7 +160,7 @@ namespace VaterpoloKlub.Controllers
 
         private bool PrisustvoNaTreninguExists(int id)
         {
-            return _context.PrisustvoNaTreninzima.Any(e => e.Id == id);
+            return _context.PrisustvoNaTreninzima.Any(e => e.TreningId == id);
         }
     }
 }
