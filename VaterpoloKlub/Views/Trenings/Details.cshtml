@@ -1,0 +1,51 @@
+﻿@model VaterpoloKlub.Models.Trening
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detalji treninga</title>
+</head>
+<body>
+
+<div>
+    <h4>Trening</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Datum)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Datum)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Trener)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Trener.Ime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bazen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bazen.Naziv)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VrstaTreninga)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VrstaTreninga.NazivTreninga)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Uredi</a> 
+    <a asp-action="Index">Vrati na listu</a>
+</div>
+</body>
+</html>
