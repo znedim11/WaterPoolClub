@@ -22,8 +22,9 @@ namespace VaterpoloKlub.Controllers
         // GET: PrisustvoNaTreningu
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.PrisustvoNaTreninzima.Include(p => p.Clan).Include(p => p.Trening);
-            return View(await applicationDbContext.ToListAsync());
+            var result = await _context.Treninzi.ToListAsync();
+            ViewData["Treninzi"] = result;
+            return View();
         }
 
         // GET: PrisustvoNaTreningu/Details/5
@@ -37,19 +38,19 @@ namespace VaterpoloKlub.Controllers
             var prisustvoNaTreningu = await _context.PrisustvoNaTreninzima
                 .Include(p => p.Clan)
                 .Include(p => p.Trening)
-                .FirstOrDefaultAsync(m => m.TreningId == id);
+                .Where(m => m.TreningId == id).ToListAsync();
             if (prisustvoNaTreningu == null)
             {
                 return NotFound();
             }
-
-            return View(prisustvoNaTreningu);
+            ViewBag.treningId = id;
+            ViewBag.nesto = prisustvoNaTreningu;
+            return View();
         }
 
         // GET: PrisustvoNaTreningu/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create() // id == treningId
         {
-            ViewData["ClanId"] = new SelectList(_context.Clanovi, "ID", "ID");
             ViewData["TreningId"] = new SelectList(_context.Treninzi, "Id", "Id");
             return View();
         }
@@ -59,17 +60,20 @@ namespace VaterpoloKlub.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TreningId,ClanId")] PrisustvoNaTreningu prisustvoNaTreningu)
+        public async Task<IActionResult> Create(int? TreningId)
         {
-            if (ModelState.IsValid)
+            var result = await _context.PrisustvoNaTreninzima.Where(x => x.TreningId == TreningId).ToListAsync();
+            if (result.Count != 0)
             {
-                _context.Add(prisustvoNaTreningu);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit), new { id = TreningId });
             }
-            ViewData["ClanId"] = new SelectList(_context.Clanovi, "ID", "ID", prisustvoNaTreningu.ClanId);
-            ViewData["TreningId"] = new SelectList(_context.Treninzi, "Id", "Id", prisustvoNaTreningu.TreningId);
-            return View(prisustvoNaTreningu);
+            var igraci = await _context.Clanovi.ToListAsync();
+            foreach (var item in igraci)
+            {
+                await _context.AddAsync(new PrisustvoNaTreningu { ClanId = item.ID, TreningId = (int)TreningId, Prisutan = false });
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Edit), new { id = TreningId });
         }
 
         // GET: PrisustvoNaTreningu/Edit/5
@@ -79,15 +83,18 @@ namespace VaterpoloKlub.Controllers
             {
                 return NotFound();
             }
-
-            var prisustvoNaTreningu = await _context.PrisustvoNaTreninzima.FindAsync(id);
+            var result = await _context.PrisustvoNaTreninzima.Where(x => x.TreningId == id).ToListAsync();
+            if (result.Count == 0)
+            {
+                return await Create(id);
+            }
+            var prisustvoNaTreningu = await _context.PrisustvoNaTreninzima.Include(p => p.Clan).Include(p => p.Trening).Where(x => x.TreningId == id).ToListAsync();
             if (prisustvoNaTreningu == null)
             {
                 return NotFound();
             }
-            ViewData["ClanId"] = new SelectList(_context.Clanovi, "ID", "ID", prisustvoNaTreningu.ClanId);
-            ViewData["TreningId"] = new SelectList(_context.Treninzi, "Id", "Id", prisustvoNaTreningu.TreningId);
-            return View(prisustvoNaTreningu);
+            ViewData["nesto"] = prisustvoNaTreningu;
+            return View();
         }
 
         // POST: PrisustvoNaTreningu/Edit/5
@@ -95,36 +102,27 @@ namespace VaterpoloKlub.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TreningId,ClanId")] PrisustvoNaTreningu prisustvoNaTreningu)
+        public async Task<IActionResult> Edit(int? id, List<int> Prisustvo)
         {
-            if (id != prisustvoNaTreningu.TreningId)
+            if(id == null)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            var clanoviPrisustvo = await _context.PrisustvoNaTreninzima.Where(x => x.TreningId == id).ToListAsync();
+            foreach (var item in clanoviPrisustvo)
             {
-                try
+                if (Prisustvo.IndexOf(item.ClanId) > -1 && !item.Prisutan)
                 {
-                    _context.Update(prisustvoNaTreningu);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+                    item.Prisutan = true;
+                    _context.Update(item);                }
+                if (item.Prisutan && Prisustvo.IndexOf(item.ClanId) < 0)
                 {
-                    if (!PrisustvoNaTreninguExists(prisustvoNaTreningu.TreningId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    item.Prisutan = false;
+                    _context.Update(item);                
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["ClanId"] = new SelectList(_context.Clanovi, "ID", "ID", prisustvoNaTreningu.ClanId);
-            ViewData["TreningId"] = new SelectList(_context.Treninzi, "Id", "Id", prisustvoNaTreningu.TreningId);
-            return View(prisustvoNaTreningu);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: PrisustvoNaTreningu/Delete/5
@@ -134,17 +132,22 @@ namespace VaterpoloKlub.Controllers
             {
                 return NotFound();
             }
-
+            var result = await _context.PrisustvoNaTreninzima.Where(x => x.TreningId == id).ToListAsync();
+            if (result.Count == 0)
+            {
+                return await Create(id);
+            }
             var prisustvoNaTreningu = await _context.PrisustvoNaTreninzima
                 .Include(p => p.Clan)
                 .Include(p => p.Trening)
-                .FirstOrDefaultAsync(m => m.TreningId == id);
+                .Where(x => x.TreningId == id)
+                .ToListAsync();
             if (prisustvoNaTreningu == null)
             {
                 return NotFound();
             }
 
-            return View(prisustvoNaTreningu);
+            return View();
         }
 
         // POST: PrisustvoNaTreningu/Delete/5
@@ -152,8 +155,11 @@ namespace VaterpoloKlub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var prisustvoNaTreningu = await _context.PrisustvoNaTreninzima.FindAsync(id);
-            _context.PrisustvoNaTreninzima.Remove(prisustvoNaTreningu);
+            var result = await _context.PrisustvoNaTreninzima.Where(x => x.TreningId == id).ToListAsync();
+            foreach(var item in result)
+            {
+                _context.Remove(item);
+            }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

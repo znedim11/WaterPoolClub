@@ -9,22 +9,27 @@
 <div>
     <h4>PrisustvoNaTreningu</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Trening)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Trening.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Clan)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Clan.ID)
-        </dd>
-    </dl>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ime i Prezime</th>
+                <th scope="col">Prisutan</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.nesto as List<PrisustvoNaTreningu>)
+            {
+                <tr>
+                    <td>@item.Clan.Ime</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prisutan)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id = ViewBag.treningId }) |
     <a asp-action="Index">Back to List</a>
 </div>

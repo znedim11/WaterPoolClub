@@ -6,6 +6,7 @@
         public Trening Trening { get; set; }
         public int ClanId { get; set; }
         public Clan Clan { get; set; }
+        public bool Prisutan { get; set; }
 
     }
 }
