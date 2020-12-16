@@ -1,0 +1,54 @@
+﻿@model VaterpoloKlub.Models.PrisustvoNaTreningu
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>PrisustvoNaTreningu</h4>
+<hr />
+<div>
+    <form method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Ime i Prezime</th>
+                    <th scope="col">Prisutan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewData["nesto"] as List<PrisustvoNaTreningu>)
+                {
+                    <tr>
+                        <td>@item.Clan.Ime</td>
+                        <td>
+                            @if (item.Prisutan)
+                            {
+                                <div class="form-check">
+                                    <input style="margin:0 auto;" type="checkbox" class="form-check-input" id="@item.ClanId" name="Prisustvo" value="@item.ClanId" checked>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-check">
+                                    <input style="margin:0 auto;" type="checkbox" class="form-check-input" id="@item.ClanId" name="Prisustvo" value="@item.ClanId">
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button class="btn btn-primary">Submit</button>
+    </form>
+    
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

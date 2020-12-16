@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VaterpoloKlub.Data;
 
-namespace VaterpoloKlub.Data.Migrations
+namespace VaterpoloKlub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201202120833_testingKey")]
+    partial class testingKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -378,9 +380,6 @@ namespace VaterpoloKlub.Data.Migrations
 
                     b.Property<int>("ClanId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Prisutan")
-                        .HasColumnType("bit");
 
                     b.HasKey("TreningId", "ClanId");
 

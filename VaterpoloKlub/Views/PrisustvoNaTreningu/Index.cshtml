@@ -1,0 +1,51 @@
+﻿@model IEnumerable<VaterpoloKlub.Models.PrisustvoNaTreningu>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Trening)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prisutan)
+            </th>*@
+            <th>Trening</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in ViewData["Treninzi"] as List<Trening>) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Trening.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clan.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prisutan)
+            </td>*@
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

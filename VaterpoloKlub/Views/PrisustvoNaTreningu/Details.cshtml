@@ -1,0 +1,35 @@
+﻿@model VaterpoloKlub.Models.PrisustvoNaTreningu
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PrisustvoNaTreningu</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ime i Prezime</th>
+                <th scope="col">Prisutan</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.nesto as List<PrisustvoNaTreningu>)
+            {
+                <tr>
+                    <td>@item.Clan.Ime</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prisutan)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = ViewBag.treningId }) |
+    <a asp-action="Index">Back to List</a>
+</div>
