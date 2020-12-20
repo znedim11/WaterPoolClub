@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace VaterpoloKlub.Models
 {
@@ -19,6 +20,8 @@ namespace VaterpoloKlub.Models
         public int VrstaTreningaID { get; set; }
 
         public VrstaTreninga VrstaTreninga { get; set; }
+
+        public List<PrisustvoNaTreningu> PrisustvoNaTreningu { get; set; }
 
     }
 }

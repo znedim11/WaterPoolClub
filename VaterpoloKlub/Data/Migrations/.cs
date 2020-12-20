@@ -58,7 +58,7 @@ namespace VaterpoloKlub.Migrations
                     table.ForeignKey(
                         name: "FK_Trening_Trener_TrenerID",
                         column: x => x.TrenerID,
-                        principalTable: "Trener",
+                        principalTable: "Treneri",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(

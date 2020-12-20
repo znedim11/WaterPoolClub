@@ -37,7 +37,7 @@ namespace VaterpoloKlub.Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-P6SG32L\MSSQLSERVERR;Database=seminarskiRad;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=.;Database=seminarskiRad;Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
