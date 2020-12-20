@@ -27,6 +27,9 @@ namespace VaterpoloKlub.Data
         public DbSet<Upravnik> Upravnici { get; set; }
         public DbSet<Clanarina> Clanarine { get; set; }
         public DbSet<Trener> Treneri { get; set; }
+        public DbSet<Trening> Trening { get; set; }
+        public DbSet<Bazen> Bazen { get; set; }
+        public DbSet<VrstaTreninga> VrstaTreninga { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -34,7 +37,7 @@ namespace VaterpoloKlub.Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.;Database=seminarskiRad;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-P6SG32L\MSSQLSERVERR;Database=seminarskiRad;Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {

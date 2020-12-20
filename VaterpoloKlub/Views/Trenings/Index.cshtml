@@ -1,0 +1,62 @@
+﻿@model IEnumerable<VaterpoloKlub.Models.Trening>
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Lista treninga</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Dodaj trening</a>
+</p>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Datum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Trener)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bazen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VrstaTreninga)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trener.Ime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bazen.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VrstaTreninga.NazivTreninga)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Uredi</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Detalji</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Obriši</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>
