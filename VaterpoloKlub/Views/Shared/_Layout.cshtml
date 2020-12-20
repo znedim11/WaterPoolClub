@@ -16,23 +16,28 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Korisnička administracija<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="UserRoles">Korisnici</a></li>
+                                <li><a asp-controller="RoleManager">Prava</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Trening<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="Trenings">Upravljanje treninzima</a></li>
+                                <li><a asp-controller="Treners">Upravljanje trenerima</a></li>
+                                <li><a asp-controller="PrisustvoNaTreningu">Prisustvo na treningu</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Treners" asp-action="">Treneri</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PrisustvoNaTreningu" asp-action="">Prisustvo</a>
-                        </li>
+                        <li><a asp-controller="Clan" asp-action="View">Član</a></li>
                     </ul>
+
                 </div>
+                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
