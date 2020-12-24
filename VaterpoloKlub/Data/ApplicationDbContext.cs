@@ -16,7 +16,6 @@ namespace VaterpoloKlub.Data
         public DbSet<PolaganjeCertifikata> PolaganjeCertifikata { get; set; }
         public DbSet<Testiranje> Testiranja { get; set; }
         public DbSet<PrisustvoNaTreningu> PrisustvoNaTreninzima { get; set; }
-        public DbSet<Trening> Treninzi { get; set; }
         public DbSet<Takmicenje> Takmicenja { get; set; }
         public DbSet<RezultatTakmicenja> RezultatTakmicenja { get; set; }
         public DbSet<Nagrada> Nagrade { get; set; }

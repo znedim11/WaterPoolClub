@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VaterpoloKlub.Data;
 
 namespace VaterpoloKlub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201202120833_testingKey")]
-    partial class testingKey
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -217,6 +215,24 @@ namespace VaterpoloKlub.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("VaterpoloKlub.Models.Bazen", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Lokacija")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Bazen");
+                });
+
             modelBuilder.Entity("VaterpoloKlub.Models.Certifikat", b =>
                 {
                     b.Property<int>("Id")
@@ -381,6 +397,9 @@ namespace VaterpoloKlub.Migrations
                     b.Property<int>("ClanId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Prisutan")
+                        .HasColumnType("bit");
+
                     b.HasKey("TreningId", "ClanId");
 
                     b.HasIndex("ClanId");
@@ -465,20 +484,32 @@ namespace VaterpoloKlub.Migrations
 
             modelBuilder.Entity("VaterpoloKlub.Models.Trening", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BazenId")
+                    b.Property<int>("BazenID")
                         .HasColumnType("int");
 
-                    b.Property<int>("TrenerId")
+                    b.Property<DateTime>("Datum")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TrenerID")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("VrstaTreningaID")
+                        .HasColumnType("int");
 
-                    b.ToTable("Treninzi");
+                    b.HasKey("ID");
+
+                    b.HasIndex("BazenID");
+
+                    b.HasIndex("TrenerID");
+
+                    b.HasIndex("VrstaTreningaID");
+
+                    b.ToTable("Trening");
                 });
 
             modelBuilder.Entity("VaterpoloKlub.Models.Upravnik", b =>
@@ -512,6 +543,21 @@ namespace VaterpoloKlub.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Utakmice");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.VrstaTreninga", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NazivTreninga")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("VrstaTreninga");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -576,6 +622,27 @@ namespace VaterpoloKlub.Migrations
                     b.HasOne("VaterpoloKlub.Models.Trening", "Trening")
                         .WithMany("PrisustvoNaTreningu")
                         .HasForeignKey("TreningId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.Trening", b =>
+                {
+                    b.HasOne("VaterpoloKlub.Models.Bazen", "Bazen")
+                        .WithMany()
+                        .HasForeignKey("BazenID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VaterpoloKlub.Models.Trener", "Trener")
+                        .WithMany()
+                        .HasForeignKey("TrenerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VaterpoloKlub.Models.VrstaTreninga", "VrstaTreninga")
+                        .WithMany()
+                        .HasForeignKey("VrstaTreningaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -10,8 +10,8 @@ using VaterpoloKlub.Data;
 namespace VaterpoloKlub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201203140841_AddedTrenings")]
-    partial class AddedTrenings
+    [Migration("20201224205131_newDB")]
+    partial class newDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -235,6 +235,21 @@ namespace VaterpoloKlub.Migrations
                     b.ToTable("Bazen");
                 });
 
+            modelBuilder.Entity("VaterpoloKlub.Models.Certifikat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OrganizacijaZaCertifikacijeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Certifikati");
+                });
+
             modelBuilder.Entity("VaterpoloKlub.Models.Clan", b =>
                 {
                     b.Property<int>("ID")
@@ -268,6 +283,183 @@ namespace VaterpoloKlub.Migrations
                     b.ToTable("Clanovi");
                 });
 
+            modelBuilder.Entity("VaterpoloKlub.Models.ClanUEkipi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClanId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EkipaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClanUEkipama");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.Clanarina", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DatumKraja")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DatumPocketa")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clanarine");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.Ekipa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ekipe");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.Nagrada", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Nagrade");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.NaplataClanarine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClanarinaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UpravnikId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NaplataClanarina");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.OrganizacijaZaCertifikacije", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrganizacijaZaCertifikacije");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.PolaganjeCertifikata", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CertifikatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrenerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PolaganjeCertifikata");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.PrisustvoNaTreningu", b =>
+                {
+                    b.Property<int>("TreningId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClanId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Prisutan")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TreningId", "ClanId");
+
+                    b.HasIndex("ClanId");
+
+                    b.ToTable("PrisustvoNaTreninzima");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.RezultatTakmicenja", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EkipaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TakmicenjeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RezultatTakmicenja");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.Takmicenje", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("TrenerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Takmicenja");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.Testiranje", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClanId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrenerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Testiranja");
+                });
+
             modelBuilder.Entity("VaterpoloKlub.Models.Trener", b =>
                 {
                     b.Property<int>("Id")
@@ -289,7 +481,7 @@ namespace VaterpoloKlub.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trener");
+                    b.ToTable("Treneri");
                 });
 
             modelBuilder.Entity("VaterpoloKlub.Models.Trening", b =>
@@ -320,6 +512,39 @@ namespace VaterpoloKlub.Migrations
                     b.HasIndex("VrstaTreningaID");
 
                     b.ToTable("Trening");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.Upravnik", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Upravnici");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.Utakmica", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BazenId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EkipaIdDva")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EkipaIdJedan")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Utakmice");
                 });
 
             modelBuilder.Entity("VaterpoloKlub.Models.VrstaTreninga", b =>
@@ -384,6 +609,21 @@ namespace VaterpoloKlub.Migrations
                     b.HasOne("VaterpoloKlub.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.PrisustvoNaTreningu", b =>
+                {
+                    b.HasOne("VaterpoloKlub.Models.Clan", "Clan")
+                        .WithMany("PrisustvoNaTreningu")
+                        .HasForeignKey("ClanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VaterpoloKlub.Models.Trening", "Trening")
+                        .WithMany("PrisustvoNaTreningu")
+                        .HasForeignKey("TreningId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

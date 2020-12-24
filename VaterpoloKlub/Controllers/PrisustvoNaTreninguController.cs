@@ -22,7 +22,7 @@ namespace VaterpoloKlub.Controllers
         // GET: PrisustvoNaTreningu
         public async Task<IActionResult> Index()
         {
-            var result = await _context.Treninzi.ToListAsync();
+            var result = await _context.Trening.ToListAsync();
             ViewData["Treninzi"] = result;
             return View();
         }
@@ -51,7 +51,7 @@ namespace VaterpoloKlub.Controllers
         // GET: PrisustvoNaTreningu/Create
         public async Task<IActionResult> Create() // id == treningId
         {
-            ViewData["TreningId"] = new SelectList(_context.Treninzi, "Id", "Id");
+            ViewData["TreningId"] = new SelectList(_context.Trening, "ID", "ID");
             return View();
         }
 
