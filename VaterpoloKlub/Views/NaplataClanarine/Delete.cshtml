@@ -1,0 +1,42 @@
+﻿@model VaterpoloKlub.Models.NaplataClanarine
+
+@{
+   // Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Brisanje naplate clanarine</title>
+</head>
+<body>
+
+    <h3>Da li ste sigurni da želite obrisati naplatu clanarine</h3>
+<div>
+    <h4>NaplataClanarine</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Upravnik)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Upravnik.Ime)  @Html.DisplayFor(model => model.Upravnik.Prezime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Clanarina)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Clanarina.NazivClanarine)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Obriši" class="btn btn-danger" /> |
+        <a asp-action="Index">Vrati na listu</a>
+    </form>
+</div>
+</body>
+</html>

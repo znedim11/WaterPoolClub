@@ -1,0 +1,39 @@
+﻿@model VaterpoloKlub.Models.NaplataClanarine
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detalji naplate clanarine</title>
+</head>
+<body>
+
+<div>
+    <h4>NaplataClanarine</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Upravnik)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Upravnik.Ime)  @Html.DisplayFor(model => model.Upravnik.Prezime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Clanarina)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Clanarina.NazivClanarine)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Uredi</a> |
+    <a asp-action="Index">Vrati na listu</a>
+</div>
+</body>
+</html>

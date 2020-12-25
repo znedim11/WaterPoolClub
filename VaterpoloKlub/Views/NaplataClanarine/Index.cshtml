@@ -1,0 +1,49 @@
+﻿@model IEnumerable<VaterpoloKlub.Models.NaplataClanarine>
+
+@{
+   // Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Lista naplata clanarine</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Dodaj naplatu clanarine</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Upravnik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clanarina)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Upravnik.Ime)  @Html.DisplayFor(modelItem => item.Upravnik.Prezime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clanarina.NazivClanarine)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Uredi</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>
