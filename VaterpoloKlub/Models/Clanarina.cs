@@ -10,6 +10,7 @@ namespace VaterpoloKlub.Models
         public DateTime DatumPocketa { get; set; }
         [DisplayName("Datum kraja")]
         public DateTime DatumKraja { get; set; }
+        public string NazivClanarine { get; set; }
         [DisplayName("Clan")]
         public int ClanId { get; set; }
         public Clan Clan { get; set; }
