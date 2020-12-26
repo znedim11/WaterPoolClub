@@ -306,13 +306,21 @@ namespace VaterpoloKlub.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ClanId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DatumKraja")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DatumPocketa")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("NazivClanarine")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ClanId");
 
                     b.ToTable("Clanarine");
                 });
@@ -355,6 +363,10 @@ namespace VaterpoloKlub.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClanarinaId");
+
+                    b.HasIndex("UpravnikId");
 
                     b.ToTable("NaplataClanarina");
                 });
@@ -547,6 +559,18 @@ namespace VaterpoloKlub.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("KontaktBroj")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Prezime")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Upravnici");
@@ -653,6 +677,30 @@ namespace VaterpoloKlub.Migrations
                     b.HasOne("VaterpoloKlub.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.Clanarina", b =>
+                {
+                    b.HasOne("VaterpoloKlub.Models.Clan", "Clan")
+                        .WithMany()
+                        .HasForeignKey("ClanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.NaplataClanarine", b =>
+                {
+                    b.HasOne("VaterpoloKlub.Models.Clanarina", "Clanarina")
+                        .WithMany()
+                        .HasForeignKey("ClanarinaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VaterpoloKlub.Models.Upravnik", "Upravnik")
+                        .WithMany()
+                        .HasForeignKey("UpravnikId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

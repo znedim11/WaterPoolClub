@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VaterpoloKlub.Migrations
 {
-    public partial class sprint3Nedim : Migration
+    public partial class initialmigrationagain : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -71,21 +71,6 @@ namespace VaterpoloKlub.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Certifikati", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Clanarine",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NazivClanarine = table.Column<string>(nullable: true),
-                    DatumPocketa = table.Column<DateTime>(nullable: false),
-                    DatumKraja = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clanarine", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,20 +184,6 @@ namespace VaterpoloKlub.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Testiranja",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TrenerId = table.Column<int>(nullable: false),
-                    ClanId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Testiranja", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Treneri",
                 columns: table => new
                 {
@@ -257,6 +228,20 @@ namespace VaterpoloKlub.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Utakmice", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vjezbe",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NazivVjezbe = table.Column<string>(nullable: true),
+                    MjernaJedinica = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vjezbe", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -379,27 +364,44 @@ namespace VaterpoloKlub.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NaplataClanarina",
+                name: "Clanarine",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UpravnikId = table.Column<int>(nullable: false),
-                    ClanarinaId = table.Column<int>(nullable: false)
+                    DatumPocketa = table.Column<DateTime>(nullable: false),
+                    DatumKraja = table.Column<DateTime>(nullable: false),
+                    NazivClanarine = table.Column<string>(nullable: true),
+                    ClanId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NaplataClanarina", x => x.Id);
+                    table.PrimaryKey("PK_Clanarine", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NaplataClanarina_Clanarine_ClanarinaId",
-                        column: x => x.ClanarinaId,
-                        principalTable: "Clanarine",
-                        principalColumn: "Id",
+                        name: "FK_Clanarine_Clanovi_ClanId",
+                        column: x => x.ClanId,
+                        principalTable: "Clanovi",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Testiranja",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrenerId = table.Column<int>(nullable: false),
+                    DatumTestiranja = table.Column<DateTime>(nullable: false),
+                    NazivTestiranja = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Testiranja", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NaplataClanarina_Upravnici_UpravnikId",
-                        column: x => x.UpravnikId,
-                        principalTable: "Upravnici",
+                        name: "FK_Testiranja_Treneri_TrenerId",
+                        column: x => x.TrenerId,
+                        principalTable: "Treneri",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -435,6 +437,64 @@ namespace VaterpoloKlub.Migrations
                         column: x => x.VrstaTreningaID,
                         principalTable: "VrstaTreninga",
                         principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NaplataClanarina",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UpravnikId = table.Column<int>(nullable: false),
+                    ClanarinaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NaplataClanarina", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NaplataClanarina_Clanarine_ClanarinaId",
+                        column: x => x.ClanarinaId,
+                        principalTable: "Clanarine",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NaplataClanarina_Upravnici_UpravnikId",
+                        column: x => x.UpravnikId,
+                        principalTable: "Upravnici",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RezultatiTestiranja",
+                columns: table => new
+                {
+                    TestiranjeId = table.Column<int>(nullable: false),
+                    ClanId = table.Column<int>(nullable: false),
+                    VjezbaId = table.Column<int>(nullable: false),
+                    Rezultat = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RezultatiTestiranja", x => new { x.ClanId, x.TestiranjeId, x.VjezbaId });
+                    table.ForeignKey(
+                        name: "FK_RezultatiTestiranja_Clanovi_ClanId",
+                        column: x => x.ClanId,
+                        principalTable: "Clanovi",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RezultatiTestiranja_Testiranja_TestiranjeId",
+                        column: x => x.TestiranjeId,
+                        principalTable: "Testiranja",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RezultatiTestiranja_Vjezbe_VjezbaId",
+                        column: x => x.VjezbaId,
+                        principalTable: "Vjezbe",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -503,6 +563,11 @@ namespace VaterpoloKlub.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Clanarine_ClanId",
+                table: "Clanarine",
+                column: "ClanId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NaplataClanarina_ClanarinaId",
                 table: "NaplataClanarina",
                 column: "ClanarinaId");
@@ -516,6 +581,21 @@ namespace VaterpoloKlub.Migrations
                 name: "IX_PrisustvoNaTreninzima_ClanId",
                 table: "PrisustvoNaTreninzima",
                 column: "ClanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RezultatiTestiranja_TestiranjeId",
+                table: "RezultatiTestiranja",
+                column: "TestiranjeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RezultatiTestiranja_VjezbaId",
+                table: "RezultatiTestiranja",
+                column: "VjezbaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Testiranja_TrenerId",
+                table: "Testiranja",
+                column: "TrenerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trening_BazenID",
@@ -575,13 +655,13 @@ namespace VaterpoloKlub.Migrations
                 name: "PrisustvoNaTreninzima");
 
             migrationBuilder.DropTable(
+                name: "RezultatiTestiranja");
+
+            migrationBuilder.DropTable(
                 name: "RezultatTakmicenja");
 
             migrationBuilder.DropTable(
                 name: "Takmicenja");
-
-            migrationBuilder.DropTable(
-                name: "Testiranja");
 
             migrationBuilder.DropTable(
                 name: "Utakmice");
@@ -599,19 +679,25 @@ namespace VaterpoloKlub.Migrations
                 name: "Upravnici");
 
             migrationBuilder.DropTable(
-                name: "Clanovi");
+                name: "Trening");
 
             migrationBuilder.DropTable(
-                name: "Trening");
+                name: "Testiranja");
+
+            migrationBuilder.DropTable(
+                name: "Vjezbe");
+
+            migrationBuilder.DropTable(
+                name: "Clanovi");
 
             migrationBuilder.DropTable(
                 name: "Bazen");
 
             migrationBuilder.DropTable(
-                name: "Treneri");
+                name: "VrstaTreninga");
 
             migrationBuilder.DropTable(
-                name: "VrstaTreninga");
+                name: "Treneri");
         }
     }
 }
