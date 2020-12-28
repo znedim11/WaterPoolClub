@@ -10,8 +10,8 @@ using VaterpoloKlub.Data;
 namespace VaterpoloKlub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201224205131_newDB")]
-    partial class newDB
+    [Migration("20201228003922_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -427,6 +427,27 @@ namespace VaterpoloKlub.Migrations
                     b.ToTable("RezultatTakmicenja");
                 });
 
+            modelBuilder.Entity("VaterpoloKlub.Models.RezultatTestiranja", b =>
+                {
+                    b.Property<int>("ClanId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TestiranjeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VjezbaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Rezultat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClanId", "TestiranjeId", "VjezbaId");
+
+                    b.HasIndex("TestiranjeId", "VjezbaId");
+
+                    b.ToTable("RezultatiTestiranja");
+                });
+
             modelBuilder.Entity("VaterpoloKlub.Models.Takmicenje", b =>
                 {
                     b.Property<int>("Id")
@@ -449,13 +470,18 @@ namespace VaterpoloKlub.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClanId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("DatumTestiranja")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NazivTestiranja")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TrenerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TrenerId");
 
                     b.ToTable("Testiranja");
                 });
@@ -547,6 +573,39 @@ namespace VaterpoloKlub.Migrations
                     b.ToTable("Utakmice");
                 });
 
+            modelBuilder.Entity("VaterpoloKlub.Models.Vjezba", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("MjernaJedinica")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NazivVjezbe")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vjezbe");
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.VjezbeTestiranje", b =>
+                {
+                    b.Property<int>("TestiranjeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VjezbaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TestiranjeId", "VjezbaId");
+
+                    b.HasIndex("VjezbaId");
+
+                    b.ToTable("VjezbeTestiranje");
+                });
+
             modelBuilder.Entity("VaterpoloKlub.Models.VrstaTreninga", b =>
                 {
                     b.Property<int>("ID")
@@ -628,6 +687,30 @@ namespace VaterpoloKlub.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("VaterpoloKlub.Models.RezultatTestiranja", b =>
+                {
+                    b.HasOne("VaterpoloKlub.Models.Clan", "Clan")
+                        .WithMany("RezultatiTestiranja")
+                        .HasForeignKey("ClanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VaterpoloKlub.Models.VjezbeTestiranje", "VjezbeTestiranje")
+                        .WithMany("RezultatTestiranja")
+                        .HasForeignKey("TestiranjeId", "VjezbaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.Testiranje", b =>
+                {
+                    b.HasOne("VaterpoloKlub.Models.Trener", "Trener")
+                        .WithMany()
+                        .HasForeignKey("TrenerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("VaterpoloKlub.Models.Trening", b =>
                 {
                     b.HasOne("VaterpoloKlub.Models.Bazen", "Bazen")
@@ -645,6 +728,21 @@ namespace VaterpoloKlub.Migrations
                     b.HasOne("VaterpoloKlub.Models.VrstaTreninga", "VrstaTreninga")
                         .WithMany()
                         .HasForeignKey("VrstaTreningaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.VjezbeTestiranje", b =>
+                {
+                    b.HasOne("VaterpoloKlub.Models.Testiranje", "Testiranje")
+                        .WithMany("VjezbeTestiranje")
+                        .HasForeignKey("TestiranjeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VaterpoloKlub.Models.Vjezba", "Vjezba")
+                        .WithMany("VjezbeTestiranje")
+                        .HasForeignKey("VjezbaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

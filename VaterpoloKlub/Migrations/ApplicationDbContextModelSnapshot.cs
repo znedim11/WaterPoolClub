@@ -441,9 +441,7 @@ namespace VaterpoloKlub.Migrations
 
                     b.HasKey("ClanId", "TestiranjeId", "VjezbaId");
 
-                    b.HasIndex("TestiranjeId");
-
-                    b.HasIndex("VjezbaId");
+                    b.HasIndex("TestiranjeId", "VjezbaId");
 
                     b.ToTable("RezultatiTestiranja");
                 });
@@ -591,6 +589,21 @@ namespace VaterpoloKlub.Migrations
                     b.ToTable("Vjezbe");
                 });
 
+            modelBuilder.Entity("VaterpoloKlub.Models.VjezbeTestiranje", b =>
+                {
+                    b.Property<int>("TestiranjeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VjezbaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TestiranjeId", "VjezbaId");
+
+                    b.HasIndex("VjezbaId");
+
+                    b.ToTable("VjezbeTestiranje");
+                });
+
             modelBuilder.Entity("VaterpoloKlub.Models.VrstaTreninga", b =>
                 {
                     b.Property<int>("ID")
@@ -680,15 +693,9 @@ namespace VaterpoloKlub.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VaterpoloKlub.Models.Testiranje", "Testiranje")
-                        .WithMany("RezultatiTestiranja")
-                        .HasForeignKey("TestiranjeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("VaterpoloKlub.Models.Vjezba", "Vjezba")
-                        .WithMany("RezultatiTestiranja")
-                        .HasForeignKey("VjezbaId")
+                    b.HasOne("VaterpoloKlub.Models.VjezbeTestiranje", "VjezbeTestiranje")
+                        .WithMany("RezultatTestiranja")
+                        .HasForeignKey("TestiranjeId", "VjezbaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -719,6 +726,21 @@ namespace VaterpoloKlub.Migrations
                     b.HasOne("VaterpoloKlub.Models.VrstaTreninga", "VrstaTreninga")
                         .WithMany()
                         .HasForeignKey("VrstaTreningaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VaterpoloKlub.Models.VjezbeTestiranje", b =>
+                {
+                    b.HasOne("VaterpoloKlub.Models.Testiranje", "Testiranje")
+                        .WithMany("VjezbeTestiranje")
+                        .HasForeignKey("TestiranjeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VaterpoloKlub.Models.Vjezba", "Vjezba")
+                        .WithMany("VjezbeTestiranje")
+                        .HasForeignKey("VjezbaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

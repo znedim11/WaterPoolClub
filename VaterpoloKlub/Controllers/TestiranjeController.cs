@@ -48,6 +48,7 @@ namespace VaterpoloKlub.Controllers
         // GET: Testiranje/Create
         public IActionResult Create()
         {
+            ViewData["Vjezbe"] = _context.Vjezbe.ToList();
             ViewData["TrenerId"] = new SelectList(_context.Treneri, "Id", "Id");
             return View();
         }
@@ -57,12 +58,27 @@ namespace VaterpoloKlub.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TrenerId,DatumTestiranja,NazivTestiranja")] Testiranje testiranje)
+        public async Task<IActionResult> Create([Bind("Id,TrenerId,DatumTestiranja,NazivTestiranja")] Testiranje testiranje, List<int> Vjezba)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(testiranje);
+                _context.Testiranja.Add(testiranje);
                 await _context.SaveChangesAsync();
+                foreach (var item in Vjezba)
+                {
+                    _context.Add(new VjezbeTestiranje { VjezbaId = item, TestiranjeId = testiranje.Id });
+                }
+                await _context.SaveChangesAsync();
+                var vjTestiranje = await _context.VjezbeTestiranje.Where(x => x.TestiranjeId == testiranje.Id).ToListAsync();
+                foreach (var item in vjTestiranje)
+                {
+                    foreach (var clan in await _context.Clanovi.ToListAsync())
+                    {
+                        _context.Add(new RezultatTestiranja { ClanId = clan.ID, VjezbaId = item.VjezbaId, TestiranjeId = item.TestiranjeId, Rezultat = "x" });
+                    }
+                }
+                await _context.SaveChangesAsync();
+                return Redirect("/RezultatTestiranja/Edit/" + testiranje.Id);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TrenerId"] = new SelectList(_context.Treneri, "Id", "Id", testiranje.TrenerId);

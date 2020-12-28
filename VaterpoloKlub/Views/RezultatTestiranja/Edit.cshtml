@@ -1,0 +1,70 @@
+﻿@model VaterpoloKlub.Models.RezultatTestiranja
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>RezultatTestiranja</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Ime i prezime</th>
+                        @foreach (var item in ViewData["vjTestiranja"] as List<VjezbeTestiranje>)
+                        {
+                            <th scope="col">@item.Vjezba.NazivVjezbe</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var clan in ViewData["rezTestiranja"] as List<Clan>)
+                    {
+                        <tr>
+                            <td>@(clan.Ime+" "+clan.Prezime) </td>
+                            @foreach (var item in clan.RezultatiTestiranja as List<RezultatTestiranja>)
+                            {
+                                <td>
+                                    <input class="form-control" type="text" name="name" value="@item.Rezultat" />
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <input type="submit" value="Save" class="btn btn-primary" />
+            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="TestiranjeId" />
+        <input type="hidden" asp-for="VjezbaId" />
+        <input type="hidden" asp-for="ClanId" />
+        <div class="form-group">
+            <label asp-for="Rezultat" class="control-label"></label>
+            <input asp-for="Rezultat" class="form-control" />
+            <span asp-validation-for="Rezultat" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>*@
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script type="text/javascript">
+    $(document).ready(function () {
+            var temp = '<%= ViewData["rezTestiranja"] %>'
+
+            console.log(temp);
+            console.log($('input'));
+        });
+</script>
+}

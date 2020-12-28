@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VaterpoloKlub.Migrations
 {
-    public partial class newDB : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -212,20 +212,6 @@ namespace VaterpoloKlub.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Testiranja",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TrenerId = table.Column<int>(nullable: false),
-                    ClanId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Testiranja", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Treneri",
                 columns: table => new
                 {
@@ -266,6 +252,20 @@ namespace VaterpoloKlub.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Utakmice", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vjezbe",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NazivVjezbe = table.Column<string>(nullable: true),
+                    MjernaJedinica = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vjezbe", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -388,6 +388,27 @@ namespace VaterpoloKlub.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Testiranja",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrenerId = table.Column<int>(nullable: false),
+                    DatumTestiranja = table.Column<DateTime>(nullable: false),
+                    NazivTestiranja = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Testiranja", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Testiranja_Treneri_TrenerId",
+                        column: x => x.TrenerId,
+                        principalTable: "Treneri",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Trening",
                 columns: table => new
                 {
@@ -422,6 +443,30 @@ namespace VaterpoloKlub.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "VjezbeTestiranje",
+                columns: table => new
+                {
+                    VjezbaId = table.Column<int>(nullable: false),
+                    TestiranjeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VjezbeTestiranje", x => new { x.TestiranjeId, x.VjezbaId });
+                    table.ForeignKey(
+                        name: "FK_VjezbeTestiranje_Testiranja_TestiranjeId",
+                        column: x => x.TestiranjeId,
+                        principalTable: "Testiranja",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_VjezbeTestiranje_Vjezbe_VjezbaId",
+                        column: x => x.VjezbaId,
+                        principalTable: "Vjezbe",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PrisustvoNaTreninzima",
                 columns: table => new
                 {
@@ -443,6 +488,32 @@ namespace VaterpoloKlub.Migrations
                         column: x => x.TreningId,
                         principalTable: "Trening",
                         principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RezultatiTestiranja",
+                columns: table => new
+                {
+                    TestiranjeId = table.Column<int>(nullable: false),
+                    VjezbaId = table.Column<int>(nullable: false),
+                    ClanId = table.Column<int>(nullable: false),
+                    Rezultat = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RezultatiTestiranja", x => new { x.ClanId, x.TestiranjeId, x.VjezbaId });
+                    table.ForeignKey(
+                        name: "FK_RezultatiTestiranja_Clanovi_ClanId",
+                        column: x => x.ClanId,
+                        principalTable: "Clanovi",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RezultatiTestiranja_VjezbeTestiranje_TestiranjeId_VjezbaId",
+                        columns: x => new { x.TestiranjeId, x.VjezbaId },
+                        principalTable: "VjezbeTestiranje",
+                        principalColumns: new[] { "TestiranjeId", "VjezbaId" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -491,6 +562,16 @@ namespace VaterpoloKlub.Migrations
                 column: "ClanId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RezultatiTestiranja_TestiranjeId_VjezbaId",
+                table: "RezultatiTestiranja",
+                columns: new[] { "TestiranjeId", "VjezbaId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Testiranja_TrenerId",
+                table: "Testiranja",
+                column: "TrenerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Trening_BazenID",
                 table: "Trening",
                 column: "BazenID");
@@ -504,6 +585,11 @@ namespace VaterpoloKlub.Migrations
                 name: "IX_Trening_VrstaTreningaID",
                 table: "Trening",
                 column: "VrstaTreningaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VjezbeTestiranje_VjezbaId",
+                table: "VjezbeTestiranje",
+                column: "VjezbaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -551,13 +637,13 @@ namespace VaterpoloKlub.Migrations
                 name: "PrisustvoNaTreninzima");
 
             migrationBuilder.DropTable(
+                name: "RezultatiTestiranja");
+
+            migrationBuilder.DropTable(
                 name: "RezultatTakmicenja");
 
             migrationBuilder.DropTable(
                 name: "Takmicenja");
-
-            migrationBuilder.DropTable(
-                name: "Testiranja");
 
             migrationBuilder.DropTable(
                 name: "Upravnici");
@@ -572,19 +658,28 @@ namespace VaterpoloKlub.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Trening");
+
+            migrationBuilder.DropTable(
                 name: "Clanovi");
 
             migrationBuilder.DropTable(
-                name: "Trening");
+                name: "VjezbeTestiranje");
 
             migrationBuilder.DropTable(
                 name: "Bazen");
 
             migrationBuilder.DropTable(
-                name: "Treneri");
+                name: "VrstaTreninga");
 
             migrationBuilder.DropTable(
-                name: "VrstaTreninga");
+                name: "Testiranja");
+
+            migrationBuilder.DropTable(
+                name: "Vjezbe");
+
+            migrationBuilder.DropTable(
+                name: "Treneri");
         }
     }
 }
