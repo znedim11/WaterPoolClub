@@ -31,6 +31,7 @@ namespace VaterpoloKlub.Data
         public DbSet<VrstaTreninga> VrstaTreninga { get; set; }
         public DbSet<Vjezba> Vjezbe { get; set; }
         public DbSet<RezultatTestiranja> RezultatiTestiranja { get; set; }
+        public DbSet<VjezbeTestiranje> VjezbeTestiranje { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -58,13 +59,19 @@ namespace VaterpoloKlub.Data
                 .WithMany(c => c.RezultatiTestiranja)
                 .HasForeignKey(bc => bc.ClanId);
             builder.Entity<RezultatTestiranja>()
-                .HasOne(bc => bc.Testiranje)
-                .WithMany(c => c.RezultatiTestiranja)
-                .HasForeignKey(bc => bc.TestiranjeId);
-            builder.Entity<RezultatTestiranja>()
-                .HasOne(bc => bc.Vjezba)
-                .WithMany(c => c.RezultatiTestiranja)
-                .HasForeignKey(bc => bc.VjezbaId);
+                .HasOne(bc => bc.VjezbeTestiranje)
+                .WithMany(c => c.RezultatTestiranja)
+                .HasForeignKey(bc => new {  bc.TestiranjeId, bc.VjezbaId});
+            builder.Entity<VjezbeTestiranje>()
+                .HasKey(x => new { x.TestiranjeId, x.VjezbaId });
+            builder.Entity<VjezbeTestiranje>()
+                .HasOne(x => x.Vjezba)
+                .WithMany(x => x.VjezbeTestiranje)
+                .HasForeignKey(x => x.VjezbaId);
+            builder.Entity<VjezbeTestiranje>()
+                .HasOne(x => x.Testiranje)
+                .WithMany(x => x.VjezbeTestiranje)
+                .HasForeignKey(x => x.TestiranjeId);
             base.OnModelCreating(builder);
         }
     }

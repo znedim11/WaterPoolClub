@@ -10,6 +10,6 @@ namespace VaterpoloKlub.Models
         public int Id { get; set; }
         public string NazivVjezbe { get; set; }
         public string MjernaJedinica { get; set; }
-        public List<RezultatTestiranja> RezultatiTestiranja { get; set; }
+        public List<VjezbeTestiranje> VjezbeTestiranje { get; set; }
     }
 }

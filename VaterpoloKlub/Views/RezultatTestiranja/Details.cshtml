@@ -1,0 +1,34 @@
+﻿@model VaterpoloKlub.ViewModels.RezultatTestiranjaViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Ime i prezime</th>
+            @foreach (var item in Model.VjezbeTestiranje)
+            {
+                <th scope="col">@item.Vjezba.NazivVjezbe</th>                
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var clan in Model.Clanovi)
+        {
+            <tr>
+                <th>@(clan.Ime + " " + clan.Prezime)</th>
+                @foreach (var item in clan.RezultatiTestiranja)
+                {
+                    <td>@item.Rezultat</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-controller="RezultatTestiranja" asp-action="Edit" asp-route-id="@Model.VjezbeTestiranje[0].TestiranjeId">Edit</a> |
+    <a asp-controller="Testiranje" asp-action="Index">Back to List</a>
+</div>

@@ -10,6 +10,6 @@ namespace VaterpoloKlub.Models
         public Trener Trener { get; set; }
         public DateTime DatumTestiranja { get; set; }
         public string NazivTestiranja { get; set; }
-        public List<RezultatTestiranja> RezultatiTestiranja { get; set; }
+        public List<VjezbeTestiranje> VjezbeTestiranje { get; set; }
     }
 }
