@@ -1,4 +1,4 @@
-﻿@model VaterpoloKlub.Models.RezultatTestiranja
+﻿@model VaterpoloKlub.ViewModels.RezultatTestiranjaViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -15,24 +15,34 @@
                 <thead>
                     <tr>
                         <th>Ime i prezime</th>
-                        @foreach (var item in ViewData["vjTestiranja"] as List<VjezbeTestiranje>)
+                        @foreach (var item in Model.VjezbeTestiranje)
                         {
                             <th scope="col">@item.Vjezba.NazivVjezbe</th>
                         }
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var clan in ViewData["rezTestiranja"] as List<Clan>)
+                    @for (int i = 0; i < Model.Clanovi.Count; i++)
                     {
-                        <tr>
-                            <td>@(clan.Ime+" "+clan.Prezime) </td>
-                            @foreach (var item in clan.RezultatiTestiranja as List<RezultatTestiranja>)
-                            {
-                                <td>
-                                    <input class="form-control" type="text" name="name" value="@item.Rezultat" />
-                                </td>
-                            }
-                        </tr>
+                    <tr>
+                        <td>@(Model.Clanovi[i].Ime+" "+Model.Clanovi[i].Prezime) </td>
+                        <input type="hidden" asp-for="Clanovi[i].ID" />
+                        <input type="hidden" asp-for="Clanovi[i].Ime" />
+                        <input type="hidden" asp-for="Clanovi[i].Prezime" />
+                        <input type="hidden" asp-for="Clanovi[i].Email" />
+                        <input type="hidden" asp-for="Clanovi[i].Kontakt" />
+                        <input type="hidden" asp-for="Clanovi[i].Mjesto" />
+                        <input type="hidden" asp-for="Clanovi[i].Adresa" />
+                        @for (int j = 0; j < Model.Clanovi[i].RezultatiTestiranja.Count; j++)
+                        {
+                    <td>
+                        <input type="hidden" asp-for="Clanovi[i].RezultatiTestiranja[j].TestiranjeId" />
+                        <input type="hidden" asp-for="Clanovi[i].RezultatiTestiranja[j].VjezbaId" />
+                        <input type="hidden" asp-for="Clanovi[i].RezultatiTestiranja[j].ClanId" />
+                        <input class="form-control" asp-for="Clanovi[i].RezultatiTestiranja[j].Rezultat" />
+                    </td>
+                        }
+                    </tr>
                     }
                 </tbody>
             </table>
