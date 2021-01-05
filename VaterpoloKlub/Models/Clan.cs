@@ -19,6 +19,7 @@ namespace VaterpoloKlub.Models
         public int ID { get; set; }
         public List<PrisustvoNaTreningu> PrisustvoNaTreningu { get; set; }
         public List<RezultatTestiranja> RezultatiTestiranja { get; set; }
+        public List<ClanUEkipi> ClanUEkipi { get; set; }
 
     }
 }
