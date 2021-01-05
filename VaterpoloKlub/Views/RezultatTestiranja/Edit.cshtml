@@ -64,17 +64,9 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Testiranje" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script type="text/javascript">
-    $(document).ready(function () {
-            var temp = '<%= ViewData["rezTestiranja"] %>'
-
-            console.log(temp);
-            console.log($('input'));
-        });
-</script>
 }
