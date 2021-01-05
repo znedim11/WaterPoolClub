@@ -10,8 +10,8 @@ using VaterpoloKlub.Data;
 namespace VaterpoloKlub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201230224616_ClanUEkipi")]
-    partial class ClanUEkipi
+    [Migration("20210105121612_initialDB")]
+    partial class initialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

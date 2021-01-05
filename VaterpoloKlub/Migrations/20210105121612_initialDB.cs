@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VaterpoloKlub.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -93,25 +93,12 @@ namespace VaterpoloKlub.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClanUEkipama",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EkipaId = table.Column<int>(nullable: false),
-                    ClanId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClanUEkipama", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ekipe",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Naziv = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -386,6 +373,30 @@ namespace VaterpoloKlub.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ClanUEkipama",
+                columns: table => new
+                {
+                    EkipaId = table.Column<int>(nullable: false),
+                    ClanId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClanUEkipama", x => new { x.ClanId, x.EkipaId });
+                    table.ForeignKey(
+                        name: "FK_ClanUEkipama_Clanovi_ClanId",
+                        column: x => x.ClanId,
+                        principalTable: "Clanovi",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClanUEkipama_Ekipe_EkipaId",
+                        column: x => x.EkipaId,
+                        principalTable: "Ekipe",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Testiranja",
                 columns: table => new
                 {
@@ -586,6 +597,11 @@ namespace VaterpoloKlub.Migrations
                 column: "ClanId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClanUEkipama_EkipaId",
+                table: "ClanUEkipama",
+                column: "EkipaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NaplataClanarina_ClanarinaId",
                 table: "NaplataClanarina",
                 column: "ClanarinaId");
@@ -655,9 +671,6 @@ namespace VaterpoloKlub.Migrations
                 name: "ClanUEkipama");
 
             migrationBuilder.DropTable(
-                name: "Ekipe");
-
-            migrationBuilder.DropTable(
                 name: "Nagrade");
 
             migrationBuilder.DropTable(
@@ -689,6 +702,9 @@ namespace VaterpoloKlub.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Ekipe");
 
             migrationBuilder.DropTable(
                 name: "Clanarine");
