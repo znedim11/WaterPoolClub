@@ -31,10 +31,11 @@ namespace VaterpoloKlub.Controllers
             }
 
             var rezultatTestiranja = await _context.Clanovi.Include(x => x.RezultatiTestiranja).ToListAsync();
-            List<RezultatTestiranja> temp = new List<RezultatTestiranja>();
+            List<Clan> temp = new List<Clan>();
             foreach (var clan in rezultatTestiranja)
             {
                 clan.RezultatiTestiranja = clan.RezultatiTestiranja.Where(x => x.TestiranjeId == id).ToList();
+                if (clan.RezultatiTestiranja.Count > 0) temp.Add(clan);
             }
             if (rezultatTestiranja == null)
             {
@@ -43,7 +44,7 @@ namespace VaterpoloKlub.Controllers
             var vjezbeTestiranje = await _context.VjezbeTestiranje.Include(x => x.Vjezba).Where(x => x.TestiranjeId == id).ToListAsync();
             var nesto = new RezultatTestiranjaViewModel
             {
-                Clanovi = rezultatTestiranja,
+                Clanovi = temp,
                 VjezbeTestiranje = vjezbeTestiranje
             };
             //ViewData["rezTestiranja"] = rezultatTestiranja;

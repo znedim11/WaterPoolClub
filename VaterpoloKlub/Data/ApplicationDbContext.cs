@@ -72,6 +72,16 @@ namespace VaterpoloKlub.Data
                 .HasOne(x => x.Testiranje)
                 .WithMany(x => x.VjezbeTestiranje)
                 .HasForeignKey(x => x.TestiranjeId);
+            builder.Entity<ClanUEkipi>()
+                .HasKey(x => new { x.ClanId, x.EkipaId });
+            builder.Entity<ClanUEkipi>()
+                .HasOne(x => x.Clan)
+                .WithMany(c => c.ClanUEkipi)
+                .HasForeignKey(x => x.ClanId);
+            builder.Entity<ClanUEkipi>()
+                .HasOne(x => x.Ekipa)
+                .WithMany(c => c.Clanovi)
+                .HasForeignKey(x => x.EkipaId);
             base.OnModelCreating(builder);
         }
     }
